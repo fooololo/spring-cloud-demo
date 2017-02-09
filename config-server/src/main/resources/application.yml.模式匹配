@@ -1,0 +1,30 @@
+server:
+  port: 8081
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/spring-cloud-samples/config-repo
+          repos:
+            simple:
+              pattern: simple/*
+              uri: https://git.oschina.net/taska/spring-cloud-config-repo
+              username: fooololo@gmail.com
+              password:
+            special:
+              pattern: special*/dev*,*special*/dev*
+              uri: https://github.com/special/config-repo
+            local:
+              pattern: local*
+              uri: file:/home/configsvc/config-repo
+logging:
+  level:
+    org.springframework.cloud: DEBUG
+    org.springframework.boot: DEBUG
+
+
+# 测试：
+# 使用http://localhost:8080/foo-default.yml，可以访问到https://github.com/spring-cloud-samples/config-repo
+# 使用http://localhost:8080/special/dev，观察日志及返回结果
+# 使用http://localhost:8080/simple/*/master/encryption.yml，可以访问到https://git.oschina.net/taska/spring-cloud-config-repo/encryption.yml
