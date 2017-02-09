@@ -10,7 +10,7 @@ spring:
         git:
           uri: https://git.oschina.net/taska/spring-cloud-config-repo     # 配置Git仓库的地址
           username: fooololo@gmail.com                                    # Git仓库的账号
-          password: xunlei5                                               # Git仓库的密码
+          password:                                                # Git仓库的密码
           searchPaths:  '{application}'
 
 logging:
