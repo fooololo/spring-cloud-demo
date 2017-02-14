@@ -1,0 +1,37 @@
+server:
+  port: 8888
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://git.oschina.net/taska/spring-cloud-config-repo      # 配置Git仓库的地址
+          username:                                                         # Git仓库的账号
+          password:                                                         # Git仓库的密码
+          searchPaths: '{application}'
+    bus:
+      trace:
+        enabled: true     # 开启cloud bus的跟踪
+  rabbitmq:
+    host: 192.168.1.224
+    port: 5672
+    username: guest
+    password: guest
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/,http://localhost:8762/eureka/
+
+#http://docs.springcloud.cn/user-guide/bus/
+
+#1、在git库上配置WebHooks，修改配置后会自动发起刷新操作
+#2、修改配置后
+#     1）手动执行POST-http://localhost:8888/bus/refresh 刷新所有客户端配置
+#     2）手动执行POST-http://localhost:8888/bus/refresh?destination=customers:9000 刷新客户端名称和端口为指定的实例
+#     3）手动执行POST-http://localhost:8888/bus/refresh?destination=customers:** 刷新客户端为指定的，端口任意的实例
+
+#HTTP endpoints 接受"destination"参数,如："/bus/refresh?destination=customers:9000"，"destination"参数
+#是ApplicationContext的ID，如果一个Bus实例拥有一个ID，然后它将处理消息，并且所有其他实例将忽略它。Spring Boot
+#在ContextIdApplicationContextInitializer设置这个ID，ID的组成默认是由spring.application.name， active profiles ， server.port
