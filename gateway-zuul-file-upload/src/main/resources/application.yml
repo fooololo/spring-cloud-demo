@@ -1,0 +1,30 @@
+server:
+  port: 8040
+spring:
+  application:
+    name: gateway-zuul
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/,http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+
+zuul:
+  routes:
+    foo-route:                   # 该配置方式中，user-route只是给路由一个名称，可以任意起名。
+      service-id: microservice-foo
+      path: /foo/**              # service-id对应的路径
+      stripPrefix: true
+
+
+logging:
+  level:
+    org.springframework.cloud: trace
+    org.springframework.boot: trace
+
+# 上传大文件得将超时时间设置长一些，否则会报超时异常。以下几行超时设置来自http://cloud.spring.io/spring-cloud-static/Camden.SR3/#_uploading_files_through_zuul
+hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 60000
+ribbon:
+  ConnectTimeout: 3000
+  ReadTimeout: 60000
